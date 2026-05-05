@@ -6,8 +6,10 @@
 <title>Anteam</title>
 <meta name="description" content="Anteam applies advanced machine learning to logistics networks to streamline the operation, reduce costs, cut emissions, and maximise fleet utilisation."/>
 <link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://www.anteam.ai/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" href="assets/fonts/space-grotesk-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin/>
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
 <noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/></noscript>
 <link href="style.css" rel="stylesheet"/>
@@ -23,6 +25,7 @@
 <div class="hidden md:flex gap-10">
 <a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="#philosophy">Mission</a>
 <a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="#products">Products</a>
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="news.html">News</a>
 </div>
 <a href="#contact" data-umami-event="cta_click" data-umami-event-location="nav" class="hidden md:inline-flex font-headline tracking-widest uppercase text-sm px-6 py-2 bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 active:scale-95">
         Contact Us
@@ -394,10 +397,11 @@ Anteam Reload™ analyses planned routes and delivery schedules to identify inef
     }
   });
 
-  window.addEventListener('load', function() {
-    halfWidth = track.offsetWidth / 2;
-    requestAnimationFrame(step);
-  });
+  halfWidth = track.offsetWidth / 2;
+  requestAnimationFrame(step);
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(function() { halfWidth = track.offsetWidth / 2; }).observe(track);
+  }
 })();
 </script>
 </body></html>
