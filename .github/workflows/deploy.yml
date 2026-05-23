@@ -27,3 +27,4 @@ jobs:
           SOURCE: "./"
           TARGET: "/var/www/anteam-ai"
           EXCLUDE: ".git/, .github/, node_modules/, .env"
+          ARGS: "--delete"

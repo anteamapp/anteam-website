@@ -65,4 +65,4 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("@tailwindcss/container-queries"),
   ],
-}
+};
