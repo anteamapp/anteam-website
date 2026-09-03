@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bespoke AI Models vs. LLM Wrappers | Anteam</title>
+<meta name="description" content="Wrappers bolt a prompt onto a general model. Bespoke AI is trained on your data for real predictability, accuracy and lower long-run cost. See how."/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://www.anteam.ai/methodology.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/></noscript>
+<link href="style.css" rel="stylesheet"/>
+<style>
+  /* ── Article-page specific styles ── */
+  :root {
+    --primary: #ffba37;
+    --surface: #131313;
+    --surface-dim: #0e0e0e;
+    --surface-container-low: #1c1b1b;
+    --on-surface: #e5e2e1;
+    --on-surface-variant: #c4c7c7;
+    --outline-variant: #444748;
+    --tertiary: #b5c8df;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: 'IBM Plex Sans', Inter, sans-serif;
+  }
+
+  /* ── Article hero ── */
+  .article-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .article-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.45) contrast(1.1);
+  }
+
+  .article-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      #131313 0%,
+      rgba(19,19,19,0.75) 50%,
+      rgba(19,19,19,0.2) 100%
+    );
+  }
+
+  .article-hero-hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(181,200,223,0.04) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.4;
+  }
+
+  /* ── Article headline ── */
+  .article-headline {
+    font-family: 'Barlow Condensed', 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+  }
+
+  /* ── Article meta bar ── */
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255,186,55,0.15);
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .meta-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+  }
+
+  .meta-item span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--on-surface);
+    margin-top: 0.2rem;
+    letter-spacing: 0.05em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: rgba(68,71,72,0.5);
+    flex-shrink: 0;
+  }
+
+  /* ── Body text ── */
+  .article-body {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--on-surface-variant);
+    max-width: 68ch;
+  }
+
+  .article-body p + p {
+    margin-top: 1.75rem;
+  }
+
+  .article-body h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .article-body h3 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
+  }
+
+  .article-body strong {
+    color: var(--on-surface);
+    font-weight: 500;
+  }
+
+  /* ── Pull quote ── */
+  .pull-quote {
+    position: relative;
+    margin: 3rem 0;
+    padding: 2rem 2rem 2rem 2.5rem;
+    border-left: 3px solid var(--primary);
+    background: rgba(255,186,55,0.04);
+  }
+
+  .pull-quote::before {
+    content: '"';
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 8rem;
+    font-weight: 800;
+    color: rgba(255,186,55,0.12);
+    position: absolute;
+    top: -1.5rem;
+    left: 1rem;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .pull-quote p {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--on-surface);
+    letter-spacing: -0.01em;
+    margin: 0 !important;
+  }
+
+  .pull-quote cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-style: normal;
+  }
+
+  /* ── Inline stat callout ── */
+  .stat-callout {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255,186,55,0.15);
+    background: var(--surface-container-low);
+    margin: 2.5rem 0;
+  }
+
+  .stat-callout-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .stat-callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--on-surface-variant);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-callout-desc {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  /* ── HUD corner decoration ── */
+  .hud-corner-tl {
+    position: absolute;
+    top: 0; left: 0;
+    width: 40px; height: 40px;
+    border-top: 1.5px solid rgba(255,186,55,0.4);
+    border-left: 1.5px solid rgba(255,186,55,0.4);
+    pointer-events: none;
+  }
+
+  .hud-corner-br {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 40px; height: 40px;
+    border-bottom: 1.5px solid rgba(255,186,55,0.4);
+    border-right: 1.5px solid rgba(255,186,55,0.4);
+    pointer-events: none;
+  }
+
+  /* ── Progress bar ── */
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--primary);
+    z-index: 100;
+    width: 0%;
+  }
+
+  /* ── Article table ── */
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .article-body th, .article-body td {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .article-body th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .article-body td {
+    color: var(--on-surface-variant);
+    font-weight: 300;
+  }
+
+  /* ── Filler image placeholders ── */
+  .img-placeholder {
+    background: #1a1a1a;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-placeholder::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(255,186,55,0.04) 0%, transparent 70%);
+  }
+
+  /* ── Animations ── */
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.15s; }
+  .fade-up:nth-child(3) { animation-delay: 0.25s; }
+  .fade-up:nth-child(4) { animation-delay: 0.35s; }
+  .fade-up:nth-child(5) { animation-delay: 0.45s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; animation: none; }
+  }
+</style>
+</head>
+
+<body class="selection:bg-primary selection:text-on-primary">
+
+<!-- Reading progress bar -->
+<div id="reading-progress"></div>
+
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 bg-[#131313]/60 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] border-b border-white/5">
+<a href="#" class="flex items-center gap-3">
+<img src="assets/anteam_logo.webp" alt="Anteam" class="h-8 w-auto"/>
+<span class="text-2xl font-bold tracking-tighter text-primary">Anteam</span>
+</a>
+<div class="hidden md:flex gap-10">
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+</div>
+
+<a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="nav" class="hidden md:inline-flex font-headline tracking-widest uppercase text-sm px-6 py-2 bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 active:scale-95">
+        Contact Us
+    </a>
+<button id="nav-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-[#C4C7C7] hover:text-primary transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+  <svg id="ham-svg" class="w-5 h-4" viewBox="0 0 20 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+    <line class="ham-line" x1="0" y1="2" x2="20" y2="2"/>
+    <line class="ham-line" x1="0" y1="8" x2="20" y2="8"/>
+    <line class="ham-line" x1="2" y1="14" x2="20" y2="14"/>
+  </svg>
+</button>
+</nav>
+<!-- Mobile nav overlay -->
+<div id="mobile-nav" class="fixed inset-0 z-40 bg-[#0e0e0e] flex flex-col items-center justify-center gap-10 pointer-events-none opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <nav class="flex flex-col items-center gap-8">
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy" tabindex="-1">Mission</a>
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products" tabindex="-1">Products</a>
+  </nav>
+  <a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="mobile_nav" class="mobile-nav-link mt-6 font-headline tracking-widest uppercase text-sm px-12 py-4 bg-primary text-on-primary hover:brightness-110 transition-all font-bold" tabindex="-1">
+    Get in Touch
+  </a>
+</div>
+
+<!-- ── Article Hero ── -->
+<section class="article-hero pt-20">
+  <img
+    class="article-hero-img"
+    src="assets/mission.webp"
+    srcset="assets/mission-700.webp 700w, assets/mission-800.webp 800w, assets/mission-1200.webp 1200w, assets/mission.webp 1400w"
+    sizes="100vw"
+    alt="Dramatic high angle shot of a semi-truck on a dark highway at night with long exposure light trails, representing the real operational data a bespoke AI model is trained on"
+  />
+  <div class="article-hero-overlay"></div>
+  <div class="article-hero-hud"></div>
+
+  <!-- Hero content -->
+  <div class="container mx-auto px-8 relative z-10 pb-16" style="max-width:1200px;">
+    <div class="max-w-4xl">
+      <h1 class="article-headline fade-up mb-6">
+        Bespoke AI Models<br/>vs. LLM Wrappers:<br/><span style="color:var(--primary)">Why Purpose-Built Beats Prompted</span>
+      </h1>
+      <p class="fade-up text-lg font-light leading-relaxed" style="color:var(--on-surface-variant);max-width:52ch;">
+        Most "AI-powered" tools are a text box bolted onto a general LLM. Here's what changes when custom models are trained on your data, instead of prompted around someone else's.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Meta bar ── -->
+<div class="container mx-auto px-8" style="max-width:1200px;">
+  <div class="meta-bar">
+    <div class="meta-item">
+      Published
+      <span>3 September 2026</span>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Author
+      <span>Anteam Research Team</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── Main content ── -->
+<main class="container mx-auto px-8 py-16" style="max-width:1200px;">
+    <!-- ── Article body ── -->
+    <article>
+      <div class="article-body">
+
+        <p>
+          Ask most vendors how their product uses AI and you'll get the same answer: a general-purpose language model with a prompt in front of it. That's fast to ship, and for menial tasks it's fine. But for the operational decisions that actually move cost, accuracy and risk, a wrapper around someone else's model is a fundamentally different product to a <strong>purpose-built machine learning model</strong> trained on your own data. The difference shows up in four places: predictability, accuracy, customization, and what it costs to run once you're not a pilot anymore.
+        </p>
+
+        <h2>What's the Difference Between a Wrapper and a Purpose-Built Model?</h2>
+
+        <p>
+          An <strong>LLM wrapper</strong> takes a general-purpose language model, the same one powering a million consumer chat apps, and adds an interface, a system prompt, and maybe a few guardrails on top. The model itself never learns anything about your business; every request leans on prompt engineering to steer a model that was trained on the open internet, not your operation.
+        </p>
+
+        <p>
+          A purpose-built model starts from the opposite direction. Not every task is a language problem, so we don't force one model type onto every job. A pricing decision, a routing decision and a load-matching decision each call for a different kind of machine learning model, built and trained on your own operational data: your pricing history, your lanes, your suppliers, your equipment. We build both the model and the software around it, so the domain knowledge lives in the system itself and operators can interface with it the way the task actually requires, not through a single generic chat window.
+        </p>
+
+        <h2>Predictability: Why "Probably Right" Isn't Good Enough</h2>
+
+        <p>
+          A wrapped model's behaviour is only as stable as the prompt in front of it. Change the phrasing of an input, update the base model underneath (something the provider controls, not you), or hit an edge case the prompt didn't anticipate, and the output can shift in ways that are hard to reproduce or debug. That's a manageable risk for a customer support chatbot. It's not acceptable when the output feeds a quote, a route, or a load-matching decision with real cost attached.
+        </p>
+
+        <p>
+          A purpose-built model's outputs are bounded by the domain it was actually trained on. It doesn't have the entire internet to draw from, which sounds like a limitation until you realise it's the point: a narrower, well-defined problem space means more consistent, more explainable answers on the specific task you built it for.
+        </p>
+
+        <h2>Accuracy: What Happens When the Model Actually Knows Your Data</h2>
+
+        <p>
+          A general model's "knowledge" of your industry is whatever it picked up from public web data, which is rarely current, rarely specific to your suppliers or equipment, and never trained on your own historical outcomes. Prompt engineering can nudge it toward better answers, but it can't teach it something it was never shown.
+        </p>
+
+        <p>
+          A model trained on your operational history has actually seen the pattern before (your pricing behaviour, your route performance, your supplier reliability) because that's what it was built on. Across bespoke deployments in aerospace, manufacturing, and energy, the pattern holds: models trained on a customer's own operational data consistently outperform general models being prompted to approximate it.
+        </p>
+
+        <h2>Customization: Adapting to Your Specific Operational Data</h2>
+
+        <p>
+          A wrapper is limited to what fits in a prompt or a retrieval snippet: a handful of documents, a summary of your process, a few examples. A purpose-built model is trained directly on the full depth of your data: your supplier network, your historical pricing, your fleet's real performance, refined as that data changes. It adapts to how your operation actually runs, not to a generic description of it.
+        </p>
+
+        <p>
+          That also means your data stays yours. A customer's data and supplier network are never pooled or shared with other customers. The model built on your operation stays specific to your operation, not blended into a shared general-purpose system.
+        </p>
+
+        <div class="stat-callout">
+          <div class="stat-callout-number">35+</div>
+          <div>
+            <div class="stat-callout-label">Years of Combined AI Experience</div>
+            <div class="stat-callout-desc">
+              The Anteam team holds 10+ international patents and has built bespoke AI solutions across aerospace, manufacturing, energy and renewables to cut operational costs, not just a single vertical, but a track record across heavy industry.
+            </div>
+          </div>
+        </div>
+
+        <h2>Cost Over Time: Why "Cheap to Start" Isn't "Cheap to Run"</h2>
+
+        <p>
+          A wrapper's cost scales with usage: every request is a metered call to a third-party API, so cost climbs in a straight line with volume, and so does your exposure to that provider's pricing changes. A purpose-built model is scoped to the task it's solving, so it isn't carrying the overhead of a general-purpose model built to do everything. Once it's running, you're not paying a per-token toll on every single decision it makes.
+        </p>
+
+        <table>
+          <thead>
+            <tr><th>Factor</th><th>LLM Wrapper</th><th>Purpose-Built Model</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Marginal cost per query</td><td>Metered, per-request</td><td>Low, largely fixed</td></tr>
+            <tr><td>Cost trend at scale</td><td>Rises with volume</td><td>Flattens with volume</td></tr>
+            <tr><td>Model scope</td><td>One general model for every task</td><td>Right-sized to the task</td></tr>
+          </tbody>
+        </table>
+
+
+        <h2>How Anteam Builds</h2>
+
+        <p>
+          This is the approach behind Anteam's own products. <a href="route-plus.html" style="color:var(--primary);">Route+™</a>, <a href="quote.html" style="color:var(--primary);">Quote™</a> and <a href="reload.html" style="color:var(--primary);">Reload™</a> aren't chatbots wrapped around a general model. Each pairs the machine learning model best suited to its task with the software customers actually use to work with it, trained on the operational data of the customer using it, built by a team with over 35 years of combined AI experience and 10+ international patents, drawing on deployments across aerospace, manufacturing, energy and renewables.
+        </p>
+
+        <p>
+          The result is software that behaves predictably, gets more accurate the more it sees your operation, and doesn't get more expensive to run the more you rely on it. <a href="index.html#contact" style="color:var(--primary);">Book a demo</a> to see it on your own data.
+        </p>
+
+      </div>
+
+    </article>
+</main>
+
+<!-- ── Footer (matches main site) ── -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 bg-[#131313] border-t border-[#B5C8DF]/10">
+  <div class="flex flex-col items-center md:items-start gap-2">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/anteam_logo.webp" alt="Anteam" class="h-7 w-auto"/>
+      <span class="font-headline text-lg font-black text-primary">ANTEAM</span>
+    </a>
+    <div class="font-body text-xs tracking-wide text-[#C4C7C7]">© 2026 ANTEAM LTD</div>
+  </div>
+  <div class="flex flex-wrap justify-center gap-8">
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+    <a class="font-body text-xs tracking-wide text-primary transition-colors" href="methodology.html">Why Anteam</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    var article = document.querySelector('article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = article.offsetHeight - window.innerHeight;
+      var scrolled = -rect.top;
+      var pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // Nav scroll behaviour (matches main site)
+  (function() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-scrolled');
+      } else {
+        nav.classList.remove('nav-scrolled');
+      }
+    }, { passive: true });
+  })();
+
+</script>
+
+</body>
+</html>
