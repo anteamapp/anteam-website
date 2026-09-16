@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Why Manual Freight Quoting Breaks Down | Anteam</title>
+<meta name="description" content="Chasing suppliers, stale rate sheets, re-keyed numbers. Where manual freight quoting actually loses time and money, step by step."/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://www.anteam.ai/manual-freight-quoting-problems.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Why Manual Freight Quoting Breaks Down | Anteam"/>
+<meta property="og:description" content="Chasing suppliers, stale rate sheets, re-keyed numbers. Where manual freight quoting actually loses time and money, step by step."/>
+<meta property="og:url" content="https://www.anteam.ai/manual-freight-quoting-problems.html"/>
+<meta property="og:image" content="https://www.anteam.ai/assets/case_study_2.webp"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Why Manual Freight Quoting Breaks Down | Anteam"/>
+<meta name="twitter:description" content="Chasing suppliers, stale rate sheets, re-keyed numbers. Where manual freight quoting actually loses time and money, step by step."/>
+<meta name="twitter:image" content="https://www.anteam.ai/assets/case_study_2.webp"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/></noscript>
+<link href="style.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Manual Freight Quoting Breaks Down",
+  "description": "Chasing suppliers, stale rate sheets, re-keyed numbers. Where manual freight quoting actually loses time and money, step by step.",
+  "image": "https://www.anteam.ai/assets/case_study_2.webp",
+  "author": { "@type": "Organization", "name": "Anteam" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anteam",
+    "logo": { "@type": "ImageObject", "url": "https://www.anteam.ai/assets/anteam_logo.webp" }
+  },
+  "datePublished": "2026-09-16",
+  "dateModified": "2026-09-16",
+  "mainEntityOfPage": "https://www.anteam.ai/manual-freight-quoting-problems.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do manual freight quotes take so long?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because a manual quote passes through several dependent steps: finding which suppliers cover the lane, chasing a current rate, applying accessorial charges and margin, and writing the number down. Any one step waiting on a person creates delay."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much error does manual quoting actually introduce?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Manual data entry carries an average error rate of roughly 1 to 4% per field even under good conditions, according to a systematic review of data processing methods. Freight quoting, with its scattered rate sources and re-keyed numbers, is a strong candidate for the higher end of that range."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does automation just make quoting faster, or also more accurate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both, and the accuracy gain is the larger one. Automating removes the specific failure points in manual quoting: rates pulled from one current source, no manual re-keying, and margin applied by a consistent rule instead of memory."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --primary: #ffba37;
+    --surface: #131313;
+    --surface-dim: #0e0e0e;
+    --surface-container-low: #1c1b1b;
+    --on-surface: #e5e2e1;
+    --on-surface-variant: #c4c7c7;
+    --outline-variant: #444748;
+    --tertiary: #b5c8df;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: 'IBM Plex Sans', Inter, sans-serif;
+  }
+
+  .article-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .article-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.45) contrast(1.1);
+  }
+
+  .article-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      #131313 0%,
+      rgba(19,19,19,0.75) 50%,
+      rgba(19,19,19,0.2) 100%
+    );
+  }
+
+  .article-hero-hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(181,200,223,0.04) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.4;
+  }
+
+  .article-headline {
+    font-family: 'Barlow Condensed', 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+  }
+
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255,186,55,0.15);
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .meta-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+  }
+
+  .meta-item span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--on-surface);
+    margin-top: 0.2rem;
+    letter-spacing: 0.05em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: rgba(68,71,72,0.5);
+    flex-shrink: 0;
+  }
+
+  .article-body {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--on-surface-variant);
+    max-width: 68ch;
+  }
+
+  .article-body p + p {
+    margin-top: 1.75rem;
+  }
+
+  .article-body h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .article-body strong {
+    color: var(--on-surface);
+    font-weight: 500;
+  }
+
+  .article-body ul {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+    list-style: none;
+  }
+
+  .article-body ul li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+  }
+
+  .stat-callout {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255,186,55,0.15);
+    background: var(--surface-container-low);
+    margin: 2.5rem 0;
+  }
+
+  .stat-callout-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .stat-callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--on-surface-variant);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-callout-desc {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--primary);
+    z-index: 100;
+    width: 0%;
+  }
+
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .article-body th, .article-body td {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .article-body th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .article-body td {
+    color: var(--on-surface-variant);
+    font-weight: 300;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.15s; }
+
+  .faq-item {
+    border-top: 1px solid rgba(68,71,72,0.3);
+    padding: 1.75rem 0;
+  }
+
+  .faq-item:last-of-type {
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .faq-question {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .faq-question::before {
+    content: 'Q';
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--primary);
+    border: 1px solid rgba(255,186,55,0.4);
+    transform: translateY(2px);
+  }
+
+  .faq-answer {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--on-surface-variant);
+    padding-left: 2.45rem;
+    margin: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; animation: none; }
+  }
+</style>
+</head>
+
+<body class="selection:bg-primary selection:text-on-primary">
+
+<div id="reading-progress"></div>
+
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 bg-[#131313]/60 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] border-b border-white/5">
+<a href="index.html" class="flex items-center gap-3">
+<img src="assets/anteam_logo.webp" alt="Anteam" class="h-8 w-auto"/>
+<span class="text-2xl font-bold tracking-tighter text-primary">Anteam</span>
+</a>
+<div class="hidden md:flex gap-10">
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+</div>
+
+<a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="nav" class="hidden md:inline-flex font-headline tracking-widest uppercase text-sm px-6 py-2 bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 active:scale-95">
+        Contact Us
+    </a>
+<button id="nav-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-[#C4C7C7] hover:text-primary transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+  <svg id="ham-svg" class="w-5 h-4" viewBox="0 0 20 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+    <line class="ham-line" x1="0" y1="2" x2="20" y2="2"/>
+    <line class="ham-line" x1="0" y1="8" x2="20" y2="8"/>
+    <line class="ham-line" x1="2" y1="14" x2="20" y2="14"/>
+  </svg>
+</button>
+</nav>
+<!-- Mobile nav overlay -->
+<div id="mobile-nav" class="fixed inset-0 z-40 bg-[#0e0e0e] flex flex-col items-center justify-center gap-10 pointer-events-none opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <nav class="flex flex-col items-center gap-8">
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy" tabindex="-1">Mission</a>
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products" tabindex="-1">Products</a>
+  </nav>
+  <a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="mobile_nav" class="mobile-nav-link mt-6 font-headline tracking-widest uppercase text-sm px-12 py-4 bg-primary text-on-primary hover:brightness-110 transition-all font-bold" tabindex="-1">
+    Get in Touch
+  </a>
+</div>
+
+<!-- ── Article Hero ── -->
+<section class="article-hero pt-20">
+  <img
+    class="article-hero-img"
+    src="assets/case_study_2.webp"
+    srcset="assets/case_study_2-600.webp 600w, assets/case_study_2.webp 1200w"
+    sizes="100vw"
+    alt="Industrial freight yard scene representing the manual work behind chasing supplier rates for a quote"
+  />
+  <div class="article-hero-overlay"></div>
+  <div class="article-hero-hud"></div>
+
+  <div class="container mx-auto px-8 relative z-10 pb-16" style="max-width:1200px;">
+    <div class="max-w-4xl">
+      <h1 class="article-headline fade-up mb-6">
+        Why Manual Freight<br/>Quoting Breaks Down
+      </h1>
+      <p class="fade-up text-lg font-light leading-relaxed" style="color:var(--on-surface-variant);max-width:52ch;">
+        A freight quote passes through several manual steps before it reaches a customer, and each one is a place to lose time or get the number wrong. Here's where it actually happens.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="container mx-auto px-8" style="max-width:1200px;">
+  <div class="meta-bar">
+    <div class="meta-item">
+      Published
+      <span>16 September 2026</span>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Author
+      <span>Anteam Research Team</span>
+    </div>
+  </div>
+</div>
+
+<main class="container mx-auto px-8 py-16" style="max-width:1200px;">
+    <article>
+      <div class="article-body">
+
+        <p>
+          A manual freight quote isn't one decision, it's a chain of small manual steps: someone checks which suppliers cover the lane, chases current rates, works out the right accessorial charges, applies a margin, and writes the number down somewhere a customer will see it. Every one of those steps depends on a person doing the right thing with the right information at the right moment. When the process is manual, all four of those can quietly fail at once, and usually do, just not in a way anyone notices until the shipment doesn't match the quote.
+        </p>
+
+        <h2>Chasing Suppliers for Current Rates</h2>
+
+        <p>
+          A quote is only as good as the rate it's built on, and rates move. On a lane a team quotes often, someone probably has a recent number in their head or a spreadsheet. On a less familiar lane, getting a current rate means emailing or calling a supplier and waiting, sometimes hours, for a reply. Whichever number comes back gets used for the quote, whether it's from this morning or three weeks ago.
+        </p>
+
+        <h2>Rate Data Scattered Across Spreadsheets and Inboxes</h2>
+
+        <p>
+          Most teams don't have one place that holds every supplier's current rate. Rates live in spreadsheets, email threads, and whatever a specific person happens to remember from their last few shipments on that lane. Finding the right number means knowing where to look, and the person doing the quote isn't always the person who knows.
+        </p>
+
+        <h2>Re-keying Numbers Introduces Errors</h2>
+
+        <p>
+          Even once a rate is found, it usually gets typed, copied, or re-entered somewhere: from an email into a spreadsheet, from a spreadsheet into a quote template. Every manual transcription is a chance for a transposed digit, a missed decimal point, or an accessorial charge that didn't carry over. Manual data entry carries an average error rate of roughly 1 to 4% per field even under good conditions (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10775420/" target="_blank" rel="noopener" style="color:var(--primary);">systematic review, PMC</a>), and freight quoting rarely offers good conditions. Across hundreds of quotes a month, that adds up to a quiet, steady source of pricing error that's hard to trace back to a single cause.
+        </p>
+
+        <h2>Margin Applied Inconsistently</h2>
+
+        <p>
+          Margin decisions are often left to whoever's building the quote that day, guided by instinct and whatever they remember about that customer or lane rather than a consistent rule. That's not a criticism of the person doing it, it's what happens when the only record of "what margin did we use last time" lives in someone's memory. The result is pricing that varies by who happened to be quoting, not by what the shipment actually costs to move.
+        </p>
+
+        <div class="stat-callout">
+          <div class="stat-callout-number">3.8%</div>
+          <div>
+            <div class="stat-callout-label">Average Price Error, Anteam Quote</div>
+            <div class="stat-callout-desc">
+              Measured in a live 3-month pilot with a UK freight forwarder, against 20% from a commercial alternative on the same lanes and orders.
+            </div>
+          </div>
+        </div>
+
+        <h2>No Record of Why a Quote Was Priced the Way It Was</h2>
+
+        <p>
+          When a quote is built by hand, the reasoning behind it usually isn't written down anywhere durable, just the final number. If a customer disputes a price weeks later, or a manager wants to know why one quote was priced differently from a similar one, there's often no easy way to reconstruct which rate, which supplier, and which margin decision went into it. Each quote becomes a one-off event instead of something the business can learn from.
+        </p>
+
+        <h2>What Automation Actually Changes</h2>
+
+        <p>
+          None of this is really a "quotes are slow" problem, it's a data problem wearing a speed problem's clothes. Automating freight quoting doesn't just generate a number faster, it removes the specific failure points above: rates are pulled from one current source instead of chased by email, nothing gets manually re-keyed, margin is applied by a consistent rule instead of memory, and every quote carries the data it was built from.
+        </p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <p class="faq-question">Why do manual freight quotes take so long?</p>
+          <p class="faq-answer">Because a manual quote passes through several dependent steps: finding which suppliers cover the lane, chasing a current rate, applying accessorial charges and margin, and writing the number down. Any one step waiting on a person creates delay.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-question">How much error does manual quoting actually introduce?</p>
+          <p class="faq-answer">Manual data entry carries an average error rate of roughly 1 to 4% per field even under good conditions, according to a systematic review of data processing methods. Freight quoting, with its scattered rate sources and re-keyed numbers, is a strong candidate for the higher end of that range.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-question">Does automation just make quoting faster, or also more accurate?</p>
+          <p class="faq-answer">Both, and the accuracy gain is the larger one. Automating removes the specific failure points in manual quoting: rates pulled from one current source, no manual re-keying, and margin applied by a consistent rule instead of memory.</p>
+        </div>
+
+        <h2>Quoting, Fixed at the Source</h2>
+
+        <p>
+          <a href="quote.html" style="color:var(--primary);">Anteam Quote™</a> is built on a customer's own supplier data only, always current, with margin and pricing logic applied the same way every time. In a live 3-month pilot with a UK freight forwarder, that discipline showed up as a 3.8% average price error, against 20% from a commercial alternative quoting the same lanes. <a href="index.html#contact" style="color:var(--primary);">Book a demo</a> to see it against your own quoting process.
+        </p>
+
+        <p style="font-size:0.9rem;">
+          Related reading: the same "too much to track by hand" pattern shows up in <a href="what-is-backloading.html" style="color:var(--primary);">backloading</a> and <a href="dynamic-route-insertion-explained.html" style="color:var(--primary);">dynamic route insertion</a>, both real-time matching problems that don't scale manually either.
+        </p>
+
+      </div>
+
+    </article>
+</main>
+
+<!-- ── Footer (matches main site) ── -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 bg-[#131313] border-t border-[#B5C8DF]/10">
+  <div class="flex flex-col items-center md:items-start gap-2">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/anteam_logo.webp" alt="Anteam" class="h-7 w-auto"/>
+      <span class="font-headline text-lg font-black text-primary">ANTEAM</span>
+    </a>
+    <div class="font-body text-xs tracking-wide text-[#C4C7C7]">© 2026 ANTEAM LTD</div>
+  </div>
+  <div class="flex flex-wrap justify-center gap-8">
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="methodology.html">Why Anteam</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    var article = document.querySelector('article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = article.offsetHeight - window.innerHeight;
+      var scrolled = -rect.top;
+      var pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // Nav scroll behaviour (matches main site)
+  (function() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-scrolled');
+      } else {
+        nav.classList.remove('nav-scrolled');
+      }
+    }, { passive: true });
+  })();
+
+</script>
+
+</body>
+</html>

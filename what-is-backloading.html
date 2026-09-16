@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>What Is Backloading in Logistics? | Anteam</title>
+<meta name="description" content="Backloading matches live orders to trucks already on the road, cutting empty legs and cost. What it means and how it's automated."/>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link rel="canonical" href="https://www.anteam.ai/what-is-backloading.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="What Is Backloading in Logistics? | Anteam"/>
+<meta property="og:description" content="Backloading matches live orders to trucks already on the road, cutting empty legs and cost. What it means and how it's automated."/>
+<meta property="og:url" content="https://www.anteam.ai/what-is-backloading.html"/>
+<meta property="og:image" content="https://www.anteam.ai/assets/case_study_3.webp"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="What Is Backloading in Logistics? | Anteam"/>
+<meta name="twitter:description" content="Backloading matches live orders to trucks already on the road, cutting empty legs and cost. What it means and how it's automated."/>
+<meta name="twitter:image" content="https://www.anteam.ai/assets/case_study_3.webp"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/></noscript>
+<link href="style.css" rel="stylesheet"/>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "What Is Backloading in Logistics?",
+  "description": "Backloading matches live orders to trucks already on the road, cutting empty legs and cost. What it means and how it's automated.",
+  "image": "https://www.anteam.ai/assets/case_study_3.webp",
+  "author": { "@type": "Organization", "name": "Anteam" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Anteam",
+    "logo": { "@type": "ImageObject", "url": "https://www.anteam.ai/assets/anteam_logo.webp" }
+  },
+  "datePublished": "2026-09-16",
+  "dateModified": "2026-09-16",
+  "mainEntityOfPage": "https://www.anteam.ai/what-is-backloading.html"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is backloading the same as backhaul?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not quite. Backhaul usually means a planned return leg arranged in advance. Backloading is broader and more dynamic: matching a live, unplanned order to any leg of a route with spare capacity, not just the return journey."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do trucks run empty in the first place?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Freight demand is directional and uneven, and delivery windows rarely line up neatly between an outbound and a return load. UK government figures put HGV empty running at around 28 to 30% of total vehicle mileage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can backloading be automated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Automated backloading continuously compares a fleet's live routes against available orders, calculating the actual detour cost in distance, time and capacity, and only surfaces matches where the detour is worth it."
+      }
+    }
+  ]
+}
+</script>
+<style>
+  :root {
+    --primary: #ffba37;
+    --surface: #131313;
+    --surface-dim: #0e0e0e;
+    --surface-container-low: #1c1b1b;
+    --on-surface: #e5e2e1;
+    --on-surface-variant: #c4c7c7;
+    --outline-variant: #444748;
+    --tertiary: #b5c8df;
+  }
+
+  body {
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: 'IBM Plex Sans', Inter, sans-serif;
+  }
+
+  .article-hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    overflow: hidden;
+  }
+
+  .article-hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.45) contrast(1.1);
+  }
+
+  .article-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      #131313 0%,
+      rgba(19,19,19,0.75) 50%,
+      rgba(19,19,19,0.2) 100%
+    );
+  }
+
+  .article-hero-hud {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(181,200,223,0.04) 1px, transparent 0);
+    background-size: 40px 40px;
+    opacity: 0.4;
+  }
+
+  .article-headline {
+    font-family: 'Barlow Condensed', 'Space Grotesk', sans-serif;
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--on-surface);
+  }
+
+  .meta-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(255,186,55,0.15);
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .meta-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+  }
+
+  .meta-item span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--on-surface);
+    margin-top: 0.2rem;
+    letter-spacing: 0.05em;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 500;
+  }
+
+  .meta-divider {
+    width: 1px;
+    height: 2.5rem;
+    background: rgba(68,71,72,0.5);
+    flex-shrink: 0;
+  }
+
+  .article-body {
+    font-size: 1.0625rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--on-surface-variant);
+    max-width: 68ch;
+  }
+
+  .article-body p + p {
+    margin-top: 1.75rem;
+  }
+
+  .article-body h2 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    color: var(--on-surface);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+
+  .article-body strong {
+    color: var(--on-surface);
+    font-weight: 500;
+  }
+
+  .article-body ul {
+    margin: 1.5rem 0;
+    padding-left: 1.25rem;
+    list-style: none;
+  }
+
+  .article-body ul li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .article-body ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 6px;
+    height: 6px;
+    background: var(--primary);
+  }
+
+  .stat-callout {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255,186,55,0.15);
+    background: var(--surface-container-low);
+    margin: 2.5rem 0;
+  }
+
+  .stat-callout-number {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--primary);
+    flex-shrink: 0;
+  }
+
+  .stat-callout-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--on-surface-variant);
+    margin-bottom: 0.3rem;
+  }
+
+  .stat-callout-desc {
+    font-size: 0.875rem;
+    color: var(--on-surface-variant);
+    font-weight: 300;
+    line-height: 1.5;
+  }
+
+  #reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--primary);
+    z-index: 100;
+    width: 0%;
+  }
+
+  .article-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    font-size: 0.9rem;
+  }
+
+  .article-body th, .article-body td {
+    text-align: left;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .article-body th {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--primary);
+    font-weight: 500;
+  }
+
+  .article-body td {
+    color: var(--on-surface-variant);
+    font-weight: 300;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    animation: fade-up 0.7s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+
+  .fade-up:nth-child(1) { animation-delay: 0.05s; }
+  .fade-up:nth-child(2) { animation-delay: 0.15s; }
+
+  .faq-item {
+    border-top: 1px solid rgba(68,71,72,0.3);
+    padding: 1.75rem 0;
+  }
+
+  .faq-item:last-of-type {
+    border-bottom: 1px solid rgba(68,71,72,0.3);
+  }
+
+  .faq-question {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    display: flex;
+    align-items: baseline;
+    gap: 0.85rem;
+    margin: 0 0 0.75rem 0;
+  }
+
+  .faq-question::before {
+    content: 'Q';
+    flex-shrink: 0;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--primary);
+    border: 1px solid rgba(255,186,55,0.4);
+    transform: translateY(2px);
+  }
+
+  .faq-answer {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--on-surface-variant);
+    padding-left: 2.45rem;
+    margin: 0 !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; animation: none; }
+  }
+</style>
+</head>
+
+<body class="selection:bg-primary selection:text-on-primary">
+
+<div id="reading-progress"></div>
+
+<!-- TopNavBar (Shared Component) -->
+<nav class="fixed top-0 w-full z-50 flex justify-between items-center px-8 py-4 bg-[#131313]/60 backdrop-blur-xl shadow-[0_20px_40px_rgba(0,0,0,0.3)] border-b border-white/5">
+<a href="index.html" class="flex items-center gap-3">
+<img src="assets/anteam_logo.webp" alt="Anteam" class="h-8 w-auto"/>
+<span class="text-2xl font-bold tracking-tighter text-primary">Anteam</span>
+</a>
+<div class="hidden md:flex gap-10">
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+<a class="font-headline tracking-widest uppercase text-sm text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+</div>
+
+<a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="nav" class="hidden md:inline-flex font-headline tracking-widest uppercase text-sm px-6 py-2 bg-primary/10 border border-primary/30 text-primary hover:bg-primary hover:text-on-primary transition-all duration-300 active:scale-95">
+        Contact Us
+    </a>
+<button id="nav-menu-btn" class="md:hidden flex items-center justify-center w-10 h-10 text-[#C4C7C7] hover:text-primary transition-colors" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+  <svg id="ham-svg" class="w-5 h-4" viewBox="0 0 20 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+    <line class="ham-line" x1="0" y1="2" x2="20" y2="2"/>
+    <line class="ham-line" x1="0" y1="8" x2="20" y2="8"/>
+    <line class="ham-line" x1="2" y1="14" x2="20" y2="14"/>
+  </svg>
+</button>
+</nav>
+<!-- Mobile nav overlay -->
+<div id="mobile-nav" class="fixed inset-0 z-40 bg-[#0e0e0e] flex flex-col items-center justify-center gap-10 pointer-events-none opacity-0 transition-opacity duration-300" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+  <nav class="flex flex-col items-center gap-8">
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy" tabindex="-1">Mission</a>
+    <a class="mobile-nav-link font-headline tracking-widest uppercase text-3xl text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products" tabindex="-1">Products</a>
+  </nav>
+  <a href="index.html#contact" data-umami-event="cta_click" data-umami-event-location="mobile_nav" class="mobile-nav-link mt-6 font-headline tracking-widest uppercase text-sm px-12 py-4 bg-primary text-on-primary hover:brightness-110 transition-all font-bold" tabindex="-1">
+    Get in Touch
+  </a>
+</div>
+
+<!-- ── Article Hero ── -->
+<section class="article-hero pt-20">
+  <img
+    class="article-hero-img"
+    src="assets/case_study_3.webp"
+    srcset="assets/case_study_3-600.webp 600w, assets/case_study_3.webp 1200w"
+    sizes="100vw"
+    alt="High angle night shot of city streets with glowing orange delivery vehicle trails, representing live orders being matched to trucks already on the road for backloading"
+  />
+  <div class="article-hero-overlay"></div>
+  <div class="article-hero-hud"></div>
+
+  <div class="container mx-auto px-8 relative z-10 pb-16" style="max-width:1200px;">
+    <div class="max-w-4xl">
+      <h1 class="article-headline fade-up mb-6">
+        What Is Backloading<br/>in Logistics?
+      </h1>
+      <p class="fade-up text-lg font-light leading-relaxed" style="color:var(--on-surface-variant);max-width:52ch;">
+        A truck driving back empty is a cost with nothing to show for it. What backloading means, how it differs from backhaul, and why most fleets still do it by phone and spreadsheet.
+      </p>
+    </div>
+  </div>
+</section>
+
+<div class="container mx-auto px-8" style="max-width:1200px;">
+  <div class="meta-bar">
+    <div class="meta-item">
+      Published
+      <span>16 September 2026</span>
+    </div>
+    <div class="meta-divider"></div>
+    <div class="meta-item">
+      Author
+      <span>Anteam Research Team</span>
+    </div>
+  </div>
+</div>
+
+<main class="container mx-auto px-8 py-16" style="max-width:1200px;">
+    <article>
+      <div class="article-body">
+
+        <p>
+          <strong>Backloading</strong> is the practice of filling a vehicle's spare capacity on a leg it's already running, instead of sending it out or bringing it back empty. A driver delivers a full load from A to B, then instead of returning to base with nothing on board, picks up a second order along the same route or on the way home. The truck was making the trip anyway, so backloading just makes sure it isn't making it for free.
+        </p>
+
+        <p>
+          In practice, it's a matching problem: which of the live orders in the system today actually fit this specific truck's route, timing and capacity, and is the detour to collect one worth less than the empty mile it replaces. Most fleets still solve this with phone calls, driver knowledge, and a dispatcher's memory of who usually runs that lane, which is a large part of why so many trucks still run empty.
+        </p>
+
+        <h2>Backloading vs. Backhaul: What's the Difference?</h2>
+
+        <p>
+          The two terms get used interchangeably, but they describe different scopes of the same problem, and mixing them up is a common source of confusion when comparing tools.
+        </p>
+
+        <ul>
+          <li><strong>Backhaul</strong> usually means a planned return leg, arranged ahead of time, often as part of a scheduled round trip between two fixed points.</li>
+          <li><strong>Backloading</strong> is broader and more dynamic: matching a live, unplanned order to any leg of a route with spare capacity, not just the return journey.</li>
+        </ul>
+
+        <p>
+          A backhaul is decided at the planning stage. A backload can be matched in real time, right up until it no longer makes sense for the driver to detour for it, which is what makes it hard to do well by hand and a good fit for automation.
+        </p>
+
+        <h2>Why Empty Legs Happen</h2>
+
+        <p>
+          Freight demand is directional and uneven. More goods move into some regions than out of them, seasonal demand shifts lane volumes, and delivery windows rarely line up neatly between an outbound and a return load. The result: UK government figures put HGV empty running at around 28 to 30% of total vehicle mileage (<a href="https://www.gov.uk/government/statistics/domestic-road-freight-statistics-april-2025-to-march-2026/domestic-road-freight-statistics-united-kingdom-april-2025-to-march-2026" target="_blank" rel="noopener" style="color:var(--primary);">Department for Transport, 2026</a>), a figure that's barely moved in years. Every one of those miles costs fuel, driver time and vehicle wear with no revenue and no delivered goods to show for it.
+        </p>
+
+        <div class="stat-callout">
+          <div class="stat-callout-number">50%</div>
+          <div>
+            <div class="stat-callout-label">Empty Legs Cut, Anteam Reload™</div>
+            <div class="stat-callout-desc">
+              In live deployment, Reload matches live orders to routes already running and calculates whether the detour is worth it, cutting empty legs by 50% and CO2 by 34% per matched delivery.
+            </div>
+          </div>
+        </div>
+
+        <h2>Why Manual Backloading Doesn't Scale</h2>
+
+        <p>
+          Matching a backload by hand means a dispatcher checking a route against a list of open orders, estimating the detour, and calling around to confirm, all before the window closes. That works for a handful of trusted lanes a dispatcher knows well. It breaks down at scale: with hundreds of routes and a constantly shifting pool of live orders, no team can manually recompute whether an order fits a truck's remaining capacity and timing fast enough to catch most of the available matches.
+        </p>
+
+        <p>
+          The orders that do get matched manually tend to be the obvious ones, on familiar, high-volume lanes. The harder matches, an odd-shaped gap in a route or a smaller order that only pays off with a short detour, get missed simply because no one had time to check.
+        </p>
+
+        <h2>How Automated Backloading Works</h2>
+
+        <p>
+          Automated backloading continuously compares a fleet's live routes against the pool of available orders. For each candidate match, it calculates the actual detour cost: extra distance, extra time, and whether the order still fits the vehicle's remaining capacity and delivery window. Only matches where the detour is smaller than the value of not running that leg empty get surfaced to the dispatcher.
+        </p>
+
+        <p>
+          This is a live matching problem, not a one-time planning problem, which is why it suits a model trained on a fleet's own routes and order patterns rather than a static rules engine. Order pools shift by the hour, so what counted as a good match this morning may not by the afternoon.
+        </p>
+
+        <h2>What to Look for in Backloading Software</h2>
+
+        <table>
+          <thead>
+            <tr><th>Question to ask</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Does it match in real time, or only at the planning stage?</td><td>Most available backloads appear after the route is already underway</td></tr>
+            <tr><td>Does it calculate actual detour cost, or just proximity?</td><td>A nearby order isn't a good match if the timing or capacity doesn't fit</td></tr>
+            <tr><td>Is it trained on your fleet's own routes and orders?</td><td>Generic matching misses the patterns specific to your lanes and customers</td></tr>
+            <tr><td>Does your data stay yours?</td><td>Pooling your order and route data with other customers isn't a given, so check</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+          <p class="faq-question">Is backloading the same as backhaul?</p>
+          <p class="faq-answer">Not quite. Backhaul usually means a planned return leg arranged in advance. Backloading is broader and more dynamic: matching a live, unplanned order to any leg of a route with spare capacity, not just the return journey.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-question">Why do trucks run empty in the first place?</p>
+          <p class="faq-answer">Freight demand is directional and uneven, and delivery windows rarely line up neatly between an outbound and a return load. UK government figures put HGV empty running at around 28 to 30% of total vehicle mileage.</p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-question">Can backloading be automated?</p>
+          <p class="faq-answer">Yes. Automated backloading continuously compares a fleet's live routes against available orders, calculating the actual detour cost in distance, time and capacity, and only surfaces matches where the detour is worth it.</p>
+        </div>
+
+        <h2>Backloading, Measured</h2>
+
+        <p>
+          <a href="reload.html" style="color:var(--primary);">Anteam Reload™</a> matches live orders to a fleet's existing routes and calculates the detour automatically, cutting empty legs by 50% and CO2 by 34% per matched delivery. It's trained on the fleet's own routes and order history, not a shared general model, so the matches reflect how that fleet actually runs. <a href="index.html#contact" style="color:var(--primary);">Book a demo</a> to see it against your own routes.
+        </p>
+
+        <p style="font-size:0.9rem;">
+          Related reading: <a href="dynamic-route-insertion-explained.html" style="color:var(--primary);">dynamic route insertion</a> solves a similar real-time matching problem for same-day deliveries, and <a href="manual-freight-quoting-problems.html" style="color:var(--primary);">manual freight quoting</a> breaks down for the same underlying reason, too much to track by hand.
+        </p>
+
+      </div>
+
+    </article>
+</main>
+
+<!-- ── Footer (matches main site) ── -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 bg-[#131313] border-t border-[#B5C8DF]/10">
+  <div class="flex flex-col items-center md:items-start gap-2">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="assets/anteam_logo.webp" alt="Anteam" class="h-7 w-auto"/>
+      <span class="font-headline text-lg font-black text-primary">ANTEAM</span>
+    </a>
+    <div class="font-body text-xs tracking-wide text-[#C4C7C7]">© 2026 ANTEAM LTD</div>
+  </div>
+  <div class="flex flex-wrap justify-center gap-8">
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#philosophy">Mission</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#products">Products</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="methodology.html">Why Anteam</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] hover:text-primary transition-colors" href="index.html#contact">Contact</a>
+    <a class="font-body text-xs tracking-wide text-[#C4C7C7] underline-offset-4 hover:underline transition-opacity opacity-80 hover:opacity-100" href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</footer>
+
+<script>
+  // Reading progress bar
+  (function() {
+    var bar = document.getElementById('reading-progress');
+    var article = document.querySelector('article');
+    if (!bar || !article) return;
+    function update() {
+      var rect = article.getBoundingClientRect();
+      var total = article.offsetHeight - window.innerHeight;
+      var scrolled = -rect.top;
+      var pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+
+  // Nav scroll behaviour (matches main site)
+  (function() {
+    var nav = document.querySelector('nav');
+    if (!nav) return;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 40) {
+        nav.classList.add('nav-scrolled');
+      } else {
+        nav.classList.remove('nav-scrolled');
+      }
+    }, { passive: true });
+  })();
+
+</script>
+
+</body>
+</html>
