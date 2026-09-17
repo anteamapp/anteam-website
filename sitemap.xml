@@ -21,6 +21,16 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.anteam.ai/predictive-maintenance.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.anteam.ai/ai-consultancy.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.anteam.ai/what-is-backloading.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "build:css": "tailwindcss -i tailwind.input.css -o style.css --minify",
-    "watch:css": "tailwindcss -i tailwind.input.css -o style.css --watch"
+    "watch:css": "tailwindcss -i tailwind.input.css -o style.css --watch",
+    "build:md": "node scripts/build-markdown.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
+    "cheerio": "^1.2.0",
     "sharp": "^0.34.5",
     "tailwindcss": "^3.4.19"
   },
